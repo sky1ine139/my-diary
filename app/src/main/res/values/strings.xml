@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">我的日记</string>
+
+    <!-- 主界面 -->
+    <string name="tab_write">写日记</string>
+    <string name="tab_calendar">日历</string>
+    <string name="tab_search">搜索</string>
+    <string name="today">今天</string>
+
+    <!-- 编辑页 -->
+    <string name="hint_title">标题（可不填）</string>
+    <string name="hint_content">今天发生了什么……</string>
+    <string name="hint_tags">标签，用逗号分隔，如：工作,读书</string>
+    <string name="mood">心情</string>
+    <string name="weather">天气</string>
+    <string name="save">保存</string>
+    <string name="delete">删除</string>
+    <string name="saved">已保存</string>
+    <string name="deleted">已删除</string>
+    <string name="empty_content_warn">写点什么再保存吧</string>
+    <string name="confirm_delete">确定删除这一天的日记吗？删除后无法恢复。</string>
+
+    <!-- 列表 / 搜索 -->
+    <string name="search_hint">搜索标题、正文或标签</string>
+    <string name="no_diary">还没有日记，去写下第一篇吧</string>
+    <string name="no_result">没有找到相关内容</string>
+
+    <!-- 日历 -->
+    <string name="prev_month">上个月</string>
+    <string name="next_month">下个月</string>
+
+    <!-- 菜单 -->
+    <string name="menu_export">导出 Markdown</string>
+    <string name="menu_backup">备份数据</string>
+    <string name="menu_restore">从备份恢复</string>
+    <string name="menu_stats">统计</string>
+</resources>

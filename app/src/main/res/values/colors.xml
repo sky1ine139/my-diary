@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 浅色：暖米纸 -->
+    <color name="ink">#FF1F2933</color>
+    <color name="ink_soft">#FF52606D</color>
+    <color name="ink_faint">#FF9AA5B1</color>
+    <color name="paper">#FFFDFBF7</color>
+    <color name="paper_card">#FFFFFFFF</color>
+    <color name="line">#FFE4E7EB</color>
+    <color name="accent">#FF8C6A4A</color>
+    <color name="accent_soft">#FFF3EAE2</color>
+    <color name="today_ring">#FFC08B5C</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <!-- 输入框/搜索框底色与描边（原来写死在 drawable 里，抽出来才能跟随深色） -->
+    <color name="field_bg">#FFF6F1EA</color>
+    <color name="field_stroke">#FFEDE4D9</color>
+    <color name="card_stroke">#FFF0E7DC</color>
+    <color name="chip_bg">#FFF6F1EA</color>
+    <color name="chip_stroke">#FFEADFD2</color>
+    <color name="cal_mark_stroke">#FFE2CDBA</color>
+</resources>

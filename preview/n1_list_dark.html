@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html,body { width:393px; height:852px; overflow:hidden; }
+  body { background:#17161A; font-family:"Microsoft YaHei","Noto Sans SC",sans-serif;
+         -webkit-font-smoothing:antialiased; }
+  .statusbar { height:28px; display:flex; align-items:center; justify-content:space-between;
+               padding:0 20px; font-size:12px; color:#EDE8E2; font-weight:600; }
+  .header { padding:22px 22px 0 22px; position:relative; }
+  .h-title { font-size:26px; font-weight:bold; color:#EDE8E2; letter-spacing:.02em; }
+  .h-sub { font-size:12px; color:#7D776F; margin-top:3px; }
+  .more { position:absolute; right:12px; top:20px; font-size:18px; color:#B4ADA4; letter-spacing:1px; }
+  .divider { height:1px; background:#2C2B31; margin-top:16px; }
+  .search { margin:14px 18px 0 18px; height:44px; border-radius:22px;
+            background:#26252B; border:1px solid #322F36; display:flex; align-items:center;
+            padding:0 16px; font-size:14px; color:#7D776F; }
+  .list { padding:4px 18px 0 18px; }
+  .card { margin-top:10px; background:#201F24; border-radius:14px;
+          border:1px solid #2B2A30; padding:16px; }
+  .row { display:flex; align-items:center; justify-content:space-between; }
+  .date { font-size:12px; color:#C89A6B; }
+  .mw { font-size:13px; }
+  .title { font-size:17px; font-weight:bold; color:#EDE8E2; margin-top:6px;
+           white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .preview { font-size:14px; color:#B4ADA4; margin-top:4px; line-height:1.5;
+             display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+  .tag { display:inline-block; margin-top:8px; background:#2E2723; color:#C89A6B;
+         font-size:11px; padding:3px 9px; border-radius:10px; }
+  .bottombar { position:absolute; bottom:0; left:0; right:0; height:62px;
+               background:#17161A; border-top:1px solid #2C2B31;
+               display:flex; align-items:center; padding:0 10px; }
+  .tab { flex:1; display:flex; flex-direction:column; align-items:center;
+         justify-content:center; gap:2px; }
+  .tab .ic { font-size:18px; } .tab .lb { font-size:11px; }
+  .tab.on .ic, .tab.on .lb { color:#C89A6B; }
+  .tab.off .ic, .tab.off .lb { color:#7D776F; }
+  .write-btn { width:46px; height:34px; border-radius:17px; background:#C89A6B;
+               color:#17161A; font-size:20px; font-weight:bold; display:flex;
+               align-items:center; justify-content:center; }
+</style>
+</head>
+<body>
+  <div class="statusbar"><span>23:12</span><span>▲ ▮ 84%</span></div>
+  <div class="header">
+    <div class="h-title">我的日记</div>
+    <div class="h-sub">本月已写 9 天 · 共 27 篇</div>
+    <div class="more">···</div>
+    <div class="divider"></div>
+  </div>
+  <div class="search">搜索标题、正文或标签</div>
+  <div class="list">
+    <div class="card">
+      <div class="row"><span class="date">10月31日 周六</span><span class="mw">😄 ⛅</span></div>
+      <div class="title">雨停了，巷子里的桂花香</div>
+      <div class="preview">下午加班到七点，出来发现雨已经停了，空气里全是桂花味。走了两站路回家，路过那家旧书店还亮着灯。</div>
+      <span class="tag">#生活　#散步</span>
+    </div>
+    <div class="card">
+      <div class="row"><span class="date">10月30日 周五</span><span class="mw">😪 🌧️</span></div>
+      <div class="title">赶完了那个报告</div>
+      <div class="preview">终于在截止前把报告发出去，累得不想说话。晚上煮了碗面，配了个煎蛋，算是给自己的奖励。</div>
+      <span class="tag">#工作</span>
+    </div>
+    <div class="card">
+      <div class="row"><span class="date">10月28日 周三</span><span class="mw">🙂 ☀️</span></div>
+      <div class="title">读完《万历十五年》</div>
+      <div class="preview">断断续续读了两周，今天收尾。黄仁宇写的那句"当一个人口众多的国家，各人行动全凭儒家简单粗浅而又无法固定的原则所限制"，印象很深。</div>
+      <span class="tag">#读书</span>
+    </div>
+  </div>
+  <div class="bottombar">
+    <div class="tab on"><span class="ic">☰</span><span class="lb">日记</span></div>
+    <div class="tab off"><span class="ic">▦</span><span class="lb">日历</span></div>
+    <div class="tab"><div class="write-btn">+</div></div>
+  </div>
+</body>
+</html>

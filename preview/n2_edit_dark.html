@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html,body { width:393px; height:852px; overflow:hidden; }
+  body { background:#17161A; font-family:"Microsoft YaHei","Noto Sans SC",sans-serif;
+         -webkit-font-smoothing:antialiased; }
+  .statusbar { height:28px; display:flex; align-items:center; justify-content:space-between;
+               padding:0 20px; font-size:12px; color:#EDE8E2; font-weight:600; }
+  .topbar { display:flex; align-items:center; padding:12px 12px 0 8px; }
+  .back { width:46px; height:44px; display:flex; align-items:center;
+          justify-content:center; font-size:26px; color:#EDE8E2; }
+  .tb-date { flex:1; font-size:16px; font-weight:bold; color:#EDE8E2; }
+  .save { height:36px; padding:0 18px; background:#C89A6B; color:#17161A; border-radius:17px;
+          display:flex; align-items:center; font-size:14px; font-weight:600; }
+  .del { width:46px; height:40px; display:flex; align-items:center;
+         justify-content:center; font-size:16px; margin-left:4px; }
+  .content { padding:10px 22px 0 22px; }
+  .label { font-size:12px; color:#B4ADA4; }
+  .chips { display:flex; gap:8px; margin-top:6px; }
+  .chip { padding:8px 14px; border-radius:18px; font-size:13px;
+          background:#26252B; border:1px solid #35323A; color:#B4ADA4; }
+  .chip.sel { background:#C89A6B; border-color:#C89A6B; color:#17161A; font-weight:600; }
+  .etitle { margin-top:20px; font-size:22px; font-weight:bold; color:#EDE8E2; }
+  .hr { height:1px; background:#2C2B31; margin-top:12px; }
+  .ebody { margin-top:14px; font-size:16px; color:#EDE8E2; line-height:1.85; }
+  .etags { margin-top:16px; height:44px; border-radius:22px; background:#26252B;
+           border:1px solid #322F36; display:flex; align-items:center;
+           padding:0 14px; font-size:13px; color:#EDE8E2; }
+  .count { margin-top:14px; text-align:right; font-size:12px; color:#7D776F; }
+</style>
+</head>
+<body>
+  <div class="statusbar"><span>23:12</span><span>▲ ▮ 84%</span></div>
+  <div class="topbar">
+    <div class="back">‹</div>
+    <div class="tb-date">今天 · 10月31日 周六</div>
+    <div class="save">保存</div>
+    <div class="del">🗑</div>
+  </div>
+  <div class="content">
+    <div class="label" style="margin-top:10px">心情</div>
+    <div class="chips">
+      <div class="chip sel">😄 开心</div>
+      <div class="chip">🙂 平静</div>
+      <div class="chip">😪 疲惫</div>
+      <div class="chip">😔 难过</div>
+    </div>
+    <div class="label" style="margin-top:16px">天气</div>
+    <div class="chips">
+      <div class="chip">☀️ 晴</div>
+      <div class="chip sel">⛅ 云</div>
+      <div class="chip">🌧️ 雨</div>
+    </div>
+    <div class="etitle">雨停了，巷子里的桂花香</div>
+    <div class="hr"></div>
+    <div class="ebody">
+      下午加班到七点，出来发现雨已经停了，空气里全是桂花味。<br>
+      走了两站路回家，路过那家旧书店还亮着灯，<br>
+      老板在门口抽烟，跟我点了点头。
+    </div>
+    <div class="etags">生活, 散步</div>
+    <div class="count">正文 68 字</div>
+  </div>
+</body>
+</html>

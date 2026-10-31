@@ -1,0 +1,14 @@
+# 构建产物
+build/
+.gradle/
+local.properties
+keystore.properties
+*.jks
+*.keystore
+.idea/
+*.iml
+.DS_Store
+captures/
+.externalNativeBuild/
+.cxx/
+preview/*.png

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- 笔记本封面 -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M34,26 L70,26 A6,6 0 0 1 76,32 L76,80 A6,6 0 0 1 70,86 L34,86 Z" />
+    <!-- 书脊 -->
+    <path
+        android:fillColor="#E8D5C4"
+        android:pathData="M34,26 L42,26 L42,86 L34,86 Z" />
+    <!-- 横线 -->
+    <path
+        android:fillColor="#C9B6A6"
+        android:pathData="M48,40 L66,40 L66,43.5 L48,43.5 Z" />
+    <path
+        android:fillColor="#D9C8BA"
+        android:pathData="M48,50 L66,50 L66,53.5 L48,53.5 Z" />
+    <path
+        android:fillColor="#D9C8BA"
+        android:pathData="M48,60 L60,60 L60,63.5 L48,63.5 Z" />
+    <!-- 笔 -->
+    <path
+        android:fillColor="#B0763F"
+        android:pathData="M74,44 L79,49 L62,66 L57,61 Z" />
+    <path
+        android:fillColor="#3E2B1C"
+        android:pathData="M57,61 L62,66 L55,68 Z" />
+</vector>

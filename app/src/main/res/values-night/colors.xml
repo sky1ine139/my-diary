@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 深色：夜间灰棕，避免纯黑刺眼 -->
+    <color name="ink">#FFEDE8E2</color>
+    <color name="ink_soft">#FFB4ADA4</color>
+    <color name="ink_faint">#FF7D776F</color>
+    <color name="paper">#FF17161A</color>
+    <color name="paper_card">#FF201F24</color>
+    <color name="line">#FF2C2B31</color>
+    <color name="accent">#FFC89A6B</color>
+    <color name="accent_soft">#FF2E2723</color>
+    <color name="today_ring">#FFC89A6B</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="field_bg">#FF26252B</color>
+    <color name="field_stroke">#FF322F36</color>
+    <color name="card_stroke">#FF2B2A30</color>
+    <color name="chip_bg">#FF26252B</color>
+    <color name="chip_stroke">#FF35323A</color>
+    <color name="cal_mark_stroke">#FF4A3A2C</color>
+</resources>
