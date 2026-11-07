@@ -12,3 +12,7 @@ captures/
 .externalNativeBuild/
 .cxx/
 preview/*.png
+
+# 本地打包产物
+*.apk
+

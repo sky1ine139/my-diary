@@ -34,14 +34,21 @@ class MainActivity : AppCompatActivity() {
 
     private val weekNames = arrayOf("一", "二", "三", "四", "五", "六", "日")
 
+    /** 缓存的"一天的开始时间"，避免每次取日期都读一次 SharedPreferences */
+    private var dayStartHour: Int = Settings.DEFAULT_DAY_START_HOUR
+
+    /** 概念上的"今天"：凌晨写日记时会算作前一天 */
+    private fun today(): String = DateUtil.today(dayStartHour)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         b = ActivityMainBinding.inflate(layoutInflater)
         setContentView(b.root)
 
         db = DiaryDbHelper(this)
+        dayStartHour = Settings.dayStartHour(this)
 
-        b.tvHeaderSub.text = DateUtil.prettyFull(DateUtil.today())
+        b.tvHeaderSub.text = DateUtil.prettyFull(today())
 
         adapter = DiaryAdapter { d -> openEditor(d.date) }
         b.rvList.layoutManager = LinearLayoutManager(this)
@@ -81,7 +88,7 @@ class MainActivity : AppCompatActivity() {
             renderCalendar()
         }
         b.tabNew.setOnClickListener {
-            openEditor(DateUtil.today())
+            openEditor(today())
         }
     }
 
@@ -141,7 +148,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupMore() {
         b.btnMore.setOnClickListener {
-            val options = arrayOf("导出 Markdown", "备份数据到文件", "从备份恢复", "统计", "检查更新")
+            val options = arrayOf(
+                "导出 Markdown", "备份数据到文件", "从备份恢复",
+                "统计", "设置", "检查更新"
+            )
             MaterialAlertDialogBuilder(this)
                 .setTitle("更多")
                 .setItems(options) { _, which ->
@@ -150,11 +160,34 @@ class MainActivity : AppCompatActivity() {
                         1 -> ExportUtil.backupAndShare(this, db)
                         2 -> pickBackupFile()
                         3 -> showStats()
-                        4 -> checkUpdate(manual = true)
+                        4 -> showSettings()
+                        5 -> checkUpdate(manual = true)
                     }
                 }
                 .show()
         }
+    }
+
+    /** 设置：一天的开始时间 */
+    private fun showSettings() {
+        val labels = Settings.DAY_START_OPTIONS
+            .map { if (it.first == dayStartHour) "✓ ${it.second}" else "　${it.second}" }
+            .toTypedArray()
+        MaterialAlertDialogBuilder(this)
+            .setTitle("一天的开始时间")
+            .setMessage("凌晨写日记时，这段时间算作前一天。\n选“0 点分界”则完全按自然日。")
+            .setItems(labels) { _, which ->
+                val hour = Settings.DAY_START_OPTIONS[which].first
+                Settings.setDayStartHour(this, hour)
+                dayStartHour = hour
+                toast(
+                    if (hour == 0) "已改为按自然日计算"
+                    else "已设置：凌晨 $hour 点前算前一天"
+                )
+                refresh()
+            }
+            .setNegativeButton("取消", null)
+            .show()
     }
 
     private fun checkUpdate(manual: Boolean) {
@@ -230,11 +263,11 @@ class MainActivity : AppCompatActivity() {
 
     /** 顶部摘要：本月写了几天 + 总计，比单纯的"还有多少篇"更有反馈感 */
     private fun updateHeaderStats() {
-        val monthPrefix = DateUtil.today().substring(0, 7)   // yyyy-MM
+        val monthPrefix = today().substring(0, 7)   // yyyy-MM
         val thisMonth = allDiaries.count { it.date.startsWith(monthPrefix) }
         val total = allDiaries.size
         b.tvHeaderSub.text = when {
-            total == 0 -> DateUtil.prettyFull(DateUtil.today())
+            total == 0 -> DateUtil.prettyFull(today())
             else -> "本月已写 $thisMonth 天 · 共 $total 篇"
         }
     }
@@ -283,7 +316,7 @@ class MainActivity : AppCompatActivity() {
             b.gridDays.addView(v, cellParams(cellW))
         }
 
-        val today = DateUtil.today()
+        val todayStr = today()
         for (day in 1..daysInMonth) {
             val dateStr = String.format(Locale.CHINA, "%04d-%02d-%02d", calYear, calMonth + 1, day)
             val tv = TextView(this)
@@ -292,7 +325,7 @@ class MainActivity : AppCompatActivity() {
             tv.textSize = 14f
 
             val has = marked.contains(dateStr)
-            if (dateStr == today) {
+            if (dateStr == todayStr) {
                 tv.setBackgroundResource(R.drawable.bg_cal_today)
                 tv.setTextColor(getColor(R.color.white))
                 tv.setTypeface(null, android.graphics.Typeface.BOLD)

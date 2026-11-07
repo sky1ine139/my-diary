@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html,body { width:393px; height:852px; overflow:hidden; }
+  body { background:#FDFBF7; font-family:"Microsoft YaHei","Noto Sans SC",sans-serif;
+         -webkit-font-smoothing:antialiased; position:relative; }
+  .scrim { position:absolute; inset:0; background:rgba(31,41,51,.42); }
+  .dialog {
+    position:absolute; left:24px; right:24px; top:150px;
+    background:#FFFDFA; border-radius:26px; padding:24px 0 8px 0;
+    box-shadow:0 8px 28px rgba(0,0,0,.18);
+  }
+  .d-title { font-size:19px; font-weight:bold; color:#1F2933; padding:0 24px 10px 24px; }
+  .d-msg { font-size:13px; color:#52606D; line-height:1.6; padding:0 24px 14px 24px; }
+  .d-item { font-size:15px; color:#1F2933; padding:13px 24px; }
+  .d-item.sel { color:#8C6A4A; font-weight:600; background:#FBF4EC; }
+  .d-actions { display:flex; justify-content:flex-end; padding:8px 16px 8px 16px; }
+  .d-btn { font-size:14px; color:#8C6A4A; font-weight:600; padding:10px 14px; }
+
+  .statusbar { height:28px; display:flex; align-items:center; justify-content:space-between;
+               padding:0 20px; font-size:12px; color:#1F2933; font-weight:600; }
+  .header { padding:22px 22px 0 22px; position:relative; }
+  .h-title { font-size:26px; font-weight:bold; color:#1F2933; }
+  .h-sub { font-size:12px; color:#9AA5B1; margin-top:3px; }
+  .more { position:absolute; right:12px; top:20px; font-size:18px; color:#52606D; letter-spacing:1px; }
+  .divider { height:1px; background:#E4E7EB; margin-top:16px; }
+  .search { margin:14px 18px 0 18px; height:44px; border-radius:22px;
+            background:#F6F1EA; border:1px solid #EDE4D9; display:flex; align-items:center;
+            padding:0 16px; font-size:14px; color:#9AA5B1; }
+</style>
+</head>
+<body>
+  <div class="statusbar"><span>00:32</span><span>▲ ▮ 76%</span></div>
+  <div class="header">
+    <div class="h-title">我的日记</div>
+    <div class="h-sub">本月已写 9 天 · 共 27 篇</div>
+    <div class="more">···</div>
+    <div class="divider"></div>
+  </div>
+  <div class="search">搜索标题、正文或标签</div>
+
+  <div class="scrim"></div>
+  <div class="dialog">
+    <div class="d-title">一天的开始时间</div>
+    <div class="d-msg">凌晨写日记时，这段时间算作前一天。选“0 点分界”则完全按自然日。</div>
+    <div class="d-item">　以 0 点分界（自然日）</div>
+    <div class="d-item">　凌晨 2 点前算前一天</div>
+    <div class="d-item">　凌晨 3 点前算前一天</div>
+    <div class="d-item sel">✓ 凌晨 4 点前算前一天</div>
+    <div class="d-item">　凌晨 5 点前算前一天</div>
+    <div class="d-item">　凌晨 6 点前算前一天</div>
+    <div class="d-actions"><div class="d-btn">取消</div></div>
+  </div>
+</body>
+</html>

@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.content.ContentValues
 import java.text.SimpleDateFormat
+import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 
@@ -309,9 +310,49 @@ class DiaryDbHelper(context: Context) : SQLiteOpenHelper(context, DB_NAME, null,
 
 object DateUtil {
     private val iso = SimpleDateFormat("yyyy-MM-dd", Locale.CHINA)
-    fun today(): String = iso.format(Date())
     fun format(date: Date): String = iso.format(date)
     fun parse(s: String): Date? = runCatching { iso.parse(s) }.getOrNull()
+
+    /**
+     * "今天"的日期。注意不是系统日期。
+     *
+     * 很多人习惯凌晨写前一天的日记：周二 00:30 写下周一的流水账。
+     * 若直接取系统日期，这篇会被记到周二，和心里默认的那天对不上。
+     *
+     * 所以引入「一天的开始时间」dayStartHour（默认 4 点）：
+     * 凌晨 0:00–3:59 写的内容，仍算前一天。把当前时间往前推 dayStartHour 小时
+     * 再取日期，就自然得到了"概念上的今天"。
+     *
+     * 这样两个场景一次覆盖：
+     *  - 周二 00:30 写周一的日记  → 减 4h → 周一 ✓
+     *  - 周一 23:00 写周一的日记  → 减 4h → 仍是周一 ✓
+     *  - 周二 09:00 写           → 减 4h → 周二 ✓
+     */
+    fun today(dayStartHour: Int = 4): String = logicalToday(dayStartHour, System.currentTimeMillis())
+
+    /** 纯函数版本，方便单元测试（不受真实时钟影响） */
+    fun logicalToday(dayStartHour: Int, nowMillis: Long): String {
+        val calendar = Calendar.getInstance().apply {
+            timeInMillis = nowMillis
+            add(Calendar.HOUR_OF_DAY, -dayStartHour.coerceIn(0, 12))
+        }
+        return iso.format(calendar.time)
+    }
+
+    /** 当前是否处于"延长的深夜"（凌晨 0 点到 dayStartHour 之间），用于界面提示 */
+    fun isLateNight(dayStartHour: Int): Boolean {
+        val h = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
+        return dayStartHour > 0 && h < dayStartHour
+    }
+
+    /** 增减天数，用于编辑页"前一天/后一天"翻页 */
+    fun shiftDate(dateStr: String, days: Int): String {
+        val cal = Calendar.getInstance().apply {
+            time = parse(dateStr) ?: Date()
+            add(Calendar.DAY_OF_MONTH, days)
+        }
+        return iso.format(cal.time)
+    }
 
     /** "2026-10-31" -> "10月31日" */
     fun pretty(s: String): String {

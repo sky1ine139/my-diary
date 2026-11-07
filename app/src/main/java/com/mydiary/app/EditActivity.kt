@@ -26,18 +26,22 @@ class EditActivity : AppCompatActivity() {
     private var existing: Diary? = null
     private var dirty = false
 
+    /** 缓存的"一天的开始时间" */
+    private var dayStartHour: Int = Settings.DEFAULT_DAY_START_HOUR
+
+    /** 概念上的"今天"：凌晨写日记时算作前一天 */
+    private fun today(): String = DateUtil.today(dayStartHour)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         b = ActivityEditBinding.inflate(layoutInflater)
         setContentView(b.root)
 
         db = DiaryDbHelper(this)
-        date = intent.getStringExtra(EXTRA_DATE) ?: DateUtil.today()
+        dayStartHour = Settings.dayStartHour(this)
+        date = intent.getStringExtra(EXTRA_DATE) ?: today()
 
-        b.tvDate.text = DateUtil.prettyFull(date)
-        if (date == DateUtil.today()) {
-            b.tvDate.text = "今天 · " + DateUtil.prettyFull(date)
-        }
+        renderDateHeader()
 
         existing = db.findByDate(date)
         existing?.let {
@@ -100,6 +104,113 @@ class EditActivity : AppCompatActivity() {
         if (existing == null) {
             b.etTitle.requestFocus()
         }
+    }
+
+    /**
+     * 顶部日期显示与点击切换。
+     *
+     * 日期标签点一下会弹出"前一天 / 今天 / 后一天"，用来处理记错日期、
+     * 或想补写前几天日记的情况——比在日历里翻找更直接。
+     */
+    private fun renderDateHeader() {
+        val isToday = date == today()
+        val isYesterday = DateUtil.shiftDate(today(), -1) == date
+
+        // 标题行只放"今天 · 11月2日 周一"这种短文本，避免挤坏右侧按钮
+        b.tvDate.text = when {
+            isToday -> "今天 · " + DateUtil.prettyFull(date)
+            isYesterday -> "昨天 · " + DateUtil.prettyFull(date)
+            else -> DateUtil.prettyFull(date)
+        }
+
+        // 深夜提示放到单独一行
+        if (isToday && DateUtil.isLateNight(dayStartHour)) {
+            b.tvDateHint.text = "现在还是凌晨，这篇会记到 ${DateUtil.pretty(date)}"
+            b.tvDateHint.visibility = android.view.View.VISIBLE
+        } else {
+            b.tvDateHint.visibility = android.view.View.GONE
+        }
+
+        b.tvDate.setOnClickListener { showDatePicker() }
+        b.tvDateHint.setOnClickListener { showDatePicker() }
+    }
+
+    private fun showDatePicker() {
+        val t = today()
+        val options = arrayOf(
+            "回到今天（${DateUtil.pretty(t)}）",
+            "前一天（${DateUtil.pretty(DateUtil.shiftDate(date, -1))}）",
+            "后一天（${DateUtil.pretty(DateUtil.shiftDate(date, 1))}）"
+        )
+        MaterialAlertDialogBuilder(this)
+            .setTitle("这一篇记在哪天？")
+            .setMessage("当前：${DateUtil.prettyFull(date)}")
+            .setItems(options) { _, which ->
+                val target = when (which) {
+                    0 -> t
+                    1 -> DateUtil.shiftDate(date, -1)
+                    else -> DateUtil.shiftDate(date, 1)
+                }
+                switchDate(target)
+            }
+            .setNegativeButton("取消", null)
+            .show()
+    }
+
+    /**
+     * 换日期：先把已写内容保存下来，再按新日期重新载入。
+     *
+     * 注意：如果目标那天已经有日记，直接切过去会把原文悄悄覆盖成当前内容。
+     * 所以先探测一次，有冲突就交给用户决定。
+     */
+    private fun switchDate(target: String) {
+        if (target == date) return
+
+        val occupied = db.findByDate(target)
+        if (occupied != null) {
+            MaterialAlertDialogBuilder(this)
+                .setTitle("那天已经有日记了")
+                .setMessage(
+                    "「${DateUtil.pretty(target)}」已经有内容：\n\n" +
+                            (occupied.displayTitle()) +
+                            "\n\n继续切换的话，这一篇当前的内容会被存到那一天并覆盖它。"
+                )
+                .setNegativeButton("算了", null)
+                .setPositiveButton("仍要切换") { _, _ -> doSwitchDate(target) }
+                .show()
+            return
+        }
+        doSwitchDate(target)
+    }
+
+    private fun doSwitchDate(target: String) {
+        // 先把当前这篇落盘，避免切换时丢内容
+        persistDraft()
+        if (!b.etContent.text.isNullOrBlank() || !b.etTitle.text.isNullOrBlank()) {
+            save(exit = false)
+        }
+
+        date = target
+        b.tvDate.post {
+            renderDateHeader()
+            loadDate()
+        }
+    }
+
+    /** 载入某天的已有日记（切换日期后复用） */
+    private fun loadDate() {
+        existing = db.findByDate(date)
+        b.etTitle.setText(existing?.title.orEmpty())
+        b.etContent.setText(existing?.content.orEmpty())
+        b.etTags.setText(existing?.tags.orEmpty())
+        selectedMood = existing?.mood.orEmpty()
+        selectedWeather = existing?.weather.orEmpty()
+        b.btnDelete.visibility =
+            if (existing != null) android.view.View.VISIBLE else android.view.View.GONE
+        buildChips(b.moodRow, DiaryDbHelper.MOODS, selectedMood, ::onMoodTapped)
+        buildChips(b.weatherRow, DiaryDbHelper.WEATHERS, selectedWeather, ::onWeatherTapped)
+        updateWordCount()
+        dirty = false
     }
 
     // ---------------- 字数统计 ----------------

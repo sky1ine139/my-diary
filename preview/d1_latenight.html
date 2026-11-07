@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html,body { width:393px; height:852px; overflow:hidden; }
+  body { background:#FDFBF7; font-family:"Microsoft YaHei","Noto Sans SC",sans-serif;
+         -webkit-font-smoothing:antialiased; position:relative; }
+
+  .scrim { position:absolute; inset:0; background:rgba(31,41,51,.42); }
+  .dialog {
+    position:absolute; left:24px; right:24px; top:250px;
+    background:#FFFDFA; border-radius:26px; padding:24px 0 8px 0;
+    box-shadow:0 8px 28px rgba(0,0,0,.18);
+  }
+  .d-title { font-size:19px; font-weight:bold; color:#1F2933; padding:0 24px 10px 24px; }
+  .d-msg { font-size:13px; color:#52606D; line-height:1.6; padding:0 24px 14px 24px; }
+  .d-item { font-size:15px; color:#1F2933; padding:13px 24px; }
+  .d-item.sel { color:#8C6A4A; font-weight:600; background:#FBF4EC; }
+  .d-actions { display:flex; justify-content:flex-end; padding:8px 16px 8px 16px; }
+  .d-btn { font-size:14px; color:#8C6A4A; font-weight:600; padding:10px 14px; }
+
+  .statusbar { height:28px; display:flex; align-items:center; justify-content:space-between;
+               padding:0 20px; font-size:12px; color:#1F2933; font-weight:600; }
+  .topbar { display:flex; align-items:center; padding:12px 12px 0 8px; }
+  .back { width:46px; height:44px; display:flex; align-items:center;
+          justify-content:center; font-size:26px; color:#1F2933; }
+  .tb-date { flex:1; font-size:16px; font-weight:bold; color:#1F2933; line-height:1.25; }
+  .tb-sub { font-size:11px; color:#9AA5B1; font-weight:normal; margin-top:2px; }
+  .save { height:36px; padding:0 18px; background:#8C6A4A; color:#fff; border-radius:17px;
+          display:flex; align-items:center; font-size:14px; }
+  .del { width:46px; height:40px; display:flex; align-items:center;
+         justify-content:center; font-size:16px; margin-left:4px; }
+  .content { padding:10px 22px 0 22px; }
+  .label { font-size:12px; color:#52606D; }
+  .chips { display:flex; gap:8px; margin-top:6px; }
+  .chip { padding:8px 14px; border-radius:18px; font-size:13px;
+          background:#F6F1EA; border:1px solid #EADFD2; color:#52606D; }
+  .chip.sel { background:#8C6A4A; border-color:#8C6A4A; color:#fff; font-weight:600; }
+  .etitle { margin-top:20px; font-size:22px; font-weight:bold; color:#1F2933; }
+  .hr { height:1px; background:#E4E7EB; margin-top:12px; }
+  .ebody { margin-top:14px; font-size:16px; color:#1F2933; line-height:1.85; }
+  .etags { margin-top:16px; height:44px; border-radius:22px; background:#F6F1EA;
+           border:1px solid #EDE4D9; display:flex; align-items:center;
+           padding:0 14px; font-size:13px; color:#1F2933; }
+  .count { margin-top:14px; text-align:right; font-size:12px; color:#9AA5B1; }
+</style>
+</head>
+<body>
+  <div class="statusbar"><span>00:32</span><span>▲ ▮ 76%</span></div>
+  <div class="topbar">
+    <div class="back">‹</div>
+    <div class="tb-date">
+      今天 · 11月2日 周一
+      <div class="tb-sub">现在还是凌晨，这篇会记到 11月2日</div>
+    </div>
+    <div class="save">保存</div>
+    <div class="del">🗑</div>
+  </div>
+  <div class="content">
+    <div class="label" style="margin-top:10px">心情</div>
+    <div class="chips">
+      <div class="chip">😄 开心</div>
+      <div class="chip sel">🙂 平静</div>
+      <div class="chip">😪 疲惫</div>
+      <div class="chip">😔 难过</div>
+    </div>
+    <div class="label" style="margin-top:16px">天气</div>
+    <div class="chips">
+      <div class="chip">☀️ 晴</div>
+      <div class="chip">⛅ 云</div>
+      <div class="chip sel">🌧️ 雨</div>
+    </div>
+    <div class="etitle">周一的事，周二凌晨才写完</div>
+    <div class="hr"></div>
+    <div class="ebody">
+      白天那个会开得挺久，回来路上雨还在下。<br>
+      现在零点多了，把今天的事补记一下。
+    </div>
+    <div class="etags">生活, 工作</div>
+    <div class="count">正文 42 字</div>
+  </div>
+
+  <div class="scrim"></div>
+  <div class="dialog">
+    <div class="d-title">这一篇记在哪天？</div>
+    <div class="d-msg">当前：2026年11月2日 周一</div>
+    <div class="d-item sel">回到今天（11月2日）</div>
+    <div class="d-item">前一天（11月1日）</div>
+    <div class="d-item">后一天（11月3日）</div>
+    <div class="d-actions"><div class="d-btn">取消</div></div>
+  </div>
+</body>
+</html>
